@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esmaü'l-Hüsna - 99 Esma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a3a2e;
+            --primary-dark: #052119;
+            --accent: #d4af37;
+            --accent-light: #f3e5ab;
+            --bg-dark: #0f1715;
+            --card-bg: rgba(14, 48, 38, 0.85);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --border-gold: rgba(212, 175, 55, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 0%, #134e3e 0%, transparent 70%),
+                radial-gradient(circle at 10% 90%, #07261d 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            gap: 20px;
+            max-width: 1550px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .side-panel {
+                display: none; 
+            }
+        }
+
+        .side-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 16px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 20px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-gold);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .side-panel h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        .panel-audio-btn {
+            background: transparent;
+            border: 1px solid var(--border-gold);
+            color: var(--accent);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .panel-audio-btn:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+        }
+
+        .quran-verse-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+            line-height: 2.2;
+            text-align: right;
+            direction: rtl;
+            color: var(--accent-light);
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .quran-verse-text::-webkit-scrollbar {
+            width: 4px;
+        }
+        .quran-verse-text::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            background: rgba(14, 48, 38, 0.9);
+            border: 1px solid var(--border-gold);
+            border-radius: 30px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .esma-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .esma-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border-color: var(--accent);
+        }
+
+        .esma-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border-gold);
+        }
+
+        .audio-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: 1px solid var(--border-gold);
+            color: var(--accent);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .audio-btn:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+        }
+
+        .arabic-name {
+            font-family: 'Amiri', serif;
+            font-size: 2.8rem;
+            color: var(--accent-light);
+            margin: 25px 0 10px 0;
+            line-height: 1.2;
+        }
+
+        .transliteration {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meaning {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .details-box {
+            background: rgba(5, 33, 25, 0.6);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.85rem;
+            text-align: left;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .details-box p {
+            margin-bottom: 6px;
+        }
+
+        .details-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .details-box strong {
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-gold);
+            margin-top: 3rem;
+            background: var(--primary-dark);
+        }
+
+        footer span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ESMAÜ'L-HÜSNA</h1>
+        <p>Allah'ın 99 Güzel İsmi ve Faziletleri</p>
+    </header>
+
+    <div class="main-layout">
+        <!-- SOL PANEL: Bakara Suresi 285-286 -->
+        <div class="side-panel">
+            <div class="panel-header">
+                <h3>Bakara (285-286)</h3>
+                <button class="panel-audio-btn" onclick="playBakara()" title="Bakara Suresi 285-286 Dinle">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <div class="quran-verse-text" id="bakaraText">
+                آمَنَ الرَّسُولُ بِمَا اُنْزِلَ اِلَيْهِ مِنْ رَبِّهِ وَالْمُؤْمِنُونَ كُلٌّ اٰمَنَ بِاللَّهِ وَمَلٰئِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ اَحَدٍ مِنْ رُسُلِهِ وَقَالُوا سَمِعْنَا وَاَطَعْنَا غُفْرَانَكَ رَبَّنَا وَاِلَيْكَ الْمَص۪يرُ (285) لَا يُكَلِّفُ اللَّهُ نَفْسًا اِلَّا وُسْعَهَا لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ رَبَّنَا لَا تُؤَاخِذْنَا اِنْ نَس۪ينَا اَوْ اَخْطَاْنَا رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا اِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذ۪ينَ مِنْ قَبْلِنَا رَبَّنَا وَلَا تُحَمَّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ وَاعْفُ عَنَّا وَغْفِرْ لَنَا وَرْحَمْنَا اَنْتَ مَوْلٰينَا فَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِر۪ينَ (286)
+            </div>
+        </div>
+
+        <!-- ORTA ALAN: Esmaü'l-Hüsna Listesi -->
+        <div class="content-area">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Esma ara (Örn: Rahman, Rezzak, Ya Allah)..." onkeyup="filterNames()">
+            </div>
+
+            <div class="grid-container" id="esmaGrid">
+                <!-- JavaScript ile 99 isim buraya dinamik olarak yüklenecektir -->
+            </div>
+        </div>
+
+        <!-- SAĞ PANEL: İnşirah Suresi -->
+        <div class="side-panel">
+            <div class="panel-header">
+                <h3>İnşirah Suresi</h3>
+                <button class="panel-audio-btn" onclick="playInshirah()" title="İnşirah Suresi Dinle">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <div class="quran-verse-text" id="inshirahText">
+                بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّح۪يمِ<br><br>
+                اَلَمْ نَشْرَحْ لَكَ صَدْرَكَۙ (1) وَوَضَعْنَا عَنْكَ وِزْرَكَۙ (2) الَّذ۪ي اَنْقَضَ ظَهْرَكَۙ (3) وَرَفَعْنَا لَكَ ذِكْرَكَۙ (4) فَاِنَّ مَعَ الْعُسْرِ يُسْرًاۙ (5) اِنَّ مَعَ الْعُسْرِ يُسْرًاۙ (6) فَاِذَا فَرَغْتَ فَانْصَبْۙ (7) وَاِلَى رَبِّكَ فَارْغَبْ (8)
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Esmaü'l-Hüsna Mobil Web Uygulaması &bull; Tasarım: <span>Kemal ERDAL</span></p>
+    </footer>
+
+    <script>
+        const esmaList = [
+            { no: 1, ar: "اللَّهُ", tr: "Allah", meaning: "Eksiksiz sıfatların sahibi olan tek ilah.", zikir: "100", fazilet: "Kalp huzuru ve manevi güç için zikredilir." },
+            { no: 2, ar: "الرَّحْمٰنُ", tr: "Er-Rahmân", meaning: "Dünyada bütün mühitlere merhamet eden.", zikir: "298", fazilet: "Unutkanlığın giderilmesi ve kalp katılığının gitmesi için." },
+            { no: 3, ar: "الرَّحِيمُ", tr: "Er-Rahîm", meaning: "Ahirette sadece müminlere merhamet eden.", zikir: "258", fazilet: "Rızık bolluğu ve halkın sevgisini kazanmak için." },
+            { no: 4, ar: "الْمَلِكُ", tr: "El-Melik", meaning: "Mülkün ve kâinatın gerçek sahibi, meliki.", zikir: "90", fazilet: "Maddi ve manevi güç, itibar ve bolluk için." },
+            { no: 5, ar: "الْقُدُّوسُ", tr: "El-Kuddûs", meaning: "Her türlü noksanlıktan uzak ve mukaddes.", zikir: "170", fazilet: "Kalp temizliği ve vesveseden kurtulmak için." },
+            { no: 6, ar: "السَّلَامُ", tr: "Es-Selâm", meaning: "Her türlü esenlik ve selamet veren.", zikir: "131", fazilet: "Korkulardan emin olmak ve şifa bulmak için." },
+            { no: 7, ar: "الْمُؤْمِنُ", tr: "El-Mü'min", meaning: "Güven veren, emniyete kavuşturan.", zikir: "137", fazilet: "Kötü kazalardan ve tehlikelerden korunmak için." },
+            { no: 8, ar: "الْمُهَيْمِنُ", tr: "El-Müheymin", meaning: "Gözeten ve koruyan, her şeye şahit olan.", zikir: "145", fazilet: "Gizli düşmanlardan korunmak ve yüksek makam için." },
+            { no: 9, ar: "الْعَزِيزُ", tr: "El-Azîz", meaning: "İzzet sahibi, mutlak galip ve mağlup edilemeyen.", zikir: "94", fazilet: "Onur, azamet ve kimseye muhtaç olmamak için." },
+            { no: 10, ar: "الْجَبَّارُ", tr: "El-Cebbâr", meaning: "Dilediğini yapan, hükmüne karşı gelinemeyen.", zikir: "206", fazilet: "Zalimlerin zulmünden korunmak ve isteklerin kabulü için." },
+            { no: 11, ar: "الْمُتَكَبِّرُ", tr: "El-Mütekebbir", meaning: "Büyüklükte eşi olmayan, ululuk sahibi.", zikir: "662", fazilet: "Saygınlık kazanmak ve hayırlı işlerde muvaffakiyet." },
+            { no: 12, ar: "الْخَالِقُ", tr: "El-Hâlık", meaning: "Yaratan, yoktan var eden.", zikir: "731", fazilet: "İşlerde başarı ve zihin açıklığı için." },
+            { no: 13, ar: "الْبَارِئُ", tr: "El-Bâri'", meaning: "Her şeyi kusursuz ve uyumlu yaratan.", zikir: "213", fazilet: "Sanat işlerinde ve projelerde kolaylık için." },
+            { no: 14, ar: "الْمُصَوِّرُ", tr: "El-Musavvir", meaning: "Varlıklara şekil ve suret veren.", zikir: "336", fazilet: "Maksatlara ulaşmak ve güzel ahlak için." },
+            { no: 15, ar: "الْغَفَّارُ", tr: "El-Gaffâr", meaning: "Günahları örten ve çok bağışlayan.", zikir: "1281", fazilet: "Günahların affı ve kalbin nurlanması için." },
+            { no: 16, ar: "الْقَهَّارُ", tr: "El-Kahhâr", meaning: "Her şeye ve her konuya hakim, galip.", zikir: "306", fazilet: "Nefsin kötülüklerinden ve düşmanlardan kurtulmak için." },
+            { no: 17, ar: "الْوَهَّابُ", tr: "El-Vehhâb", meaning: "Karşılıksız bol bol bağışlarda bulunan.", zikir: "14", fazilet: "Rızık darlığı çekenler ve maddi bolluk için." },
+            { no: 18, ar: "الرَّزَّاقُ", tr: "El-Rezzâk", meaning: "Bütün mahlukata rızık veren.", zikir: "308", fazilet: "Bol ve bereketli rızık kapılarının açılması için." },
+            { no: 19, ar: "الْفَتَّاحُ", tr: "El-Fettâh", meaning: "Her türlü müşkülleri açan ve kolaylaştıran.", zikir: "489", fazilet: "Maddi ve manevi hayır kapılarının açılması için." },
+            { no: 20, ar: "الْعَلِيمُ", tr: "El-Alîm", meaning: "Her şeyi en ince detayına kadar bilen.", zikir: "150", fazilet: "İlim artışı, hafıza ve zeka açıklığı için." },
+            { no: 21, ar: "الْقَابِضُ", tr: "El-Kâbıd", meaning: "Dilediğinin rızkını daraltan, sıkan.", zikir: "903", fazilet: "Zalimlerin şerrinden korunmak için." },
+            { no: 22, ar: "الْبَاسِطُ", tr: "El-Bâsıt", meaning: "Dilediğinin rızkını genişleten, açan.", zikir: "72", fazilet: "Rızık bolluğu ve huzur için." },
+            { no: 23, ar: "الْخَافِضُ", tr: "El-Hâfıd", meaning: "Seviyeyi düşüren, alçaltan.", zikir: "1481", fazilet: "Kötülerin ve nankörlerin şerrinden emin olmak için." },
+            { no: 24, ar: "الرَّافِعُ", tr: "El-Râfi'", meaning: "Şeref veren, yükselten.", zikir: "351", fazilet: "Makam ve itibar sahibi olmak, kötülükten korunmak." },
+            { no: 25, ar: "الْمُعِزُّ", tr: "El-Muiz", meaning: "Dilediğine izzet ve şeref veren.", zikir: "117", fazilet: "Halk arasında saygın ve değerli olmak için." },
+            { no: 26, ar: "الْمُذِلُّ", tr: "El-Müzil", meaning: "Dilediğini zillete düşüren, hor kılan.", zikir: "770", fazilet: "Hasetçi ve düşmanların kibrini kırmak için." },
+            { no: 27, ar: "السَّمِيعُ", tr: "El-Semî'", meaning: "Her şeyi en iyi işiten.", zikir: "180", fazilet: "Duaların kabulü ve işitme sağlığı için." },
+            { no: 28, ar: "الْبَصِيرُ", tr: "El-Basîr", meaning: "Her şeyi en ince detayına kadar gören.", zikir: "112", fazilet: "İşlerin iç yüzünü görmek ve basiret açıklığı." },
+            { no: 29, ar: "الْحَكَمُ", tr: "El-Hakem", meaning: "Mutlak hakim, hak ile batılı ayıran.", zikir: "68", fazilet: "Haklı davaları kazanmak ve adalet için." },
+            { no: 30, ar: "الْعَدْلُ", tr: "El-Adl", meaning: "Mutlak adalet sahibi.", zikir: "104", fazilet: "Adil olmak ve hakkaniyetli işler yapmak için." },
+            { no: 31, ar: "اللَّطِيفُ", tr: "El-Lâtîf", meaning: "Lütuf sahibi, kullarının işlerinin inceliğini bilen.", zikir: "129", fazilet: "İşlerin kolaylaşması, gizli hayırlara ulaşmak için." },
+            { no: 32, ar: "الْخَبِيرُ", tr: "El-Habîr", meaning: "Her şeyin iç yüzünden haberdar olan.", zikir: "812", fazilet: "Gizli olayları ve niyetleri öğrenmek için." },
+            { no: 33, ar: "الْحَلِيمُ", tr: "El-Halîm", meaning: "Cezada acele etmeyen, yumuşak huylu.", zikir: "88", fazilet: "Öfkeyi yenmek, ahlak güzelliği ve sükunet için." },
+            { no: 34, ar: "الْعَظِيمُ", tr: "El-Azîm", meaning: "Pek yüce, büyüklükte benzeri olmayan.", zikir: "1020", fazilet: "Saygınlık kazanmak ve ruhsal olgunluk için." },
+            { no: 35, ar: "الْغَفُورُ", tr: "El-Gafûr", meaning: "Affı ve mağfireti bol olan.", zikir: "1286", fazilet: "Günahların bağışlanması ve sıkıntılardan kurtulmak için." },
+            { no: 36, ar: "الشَّكُورُ", tr: "El-Şekûr", meaning: "Az amele çok sevap ve ihsan veren.", zikir: "526", fazilet: "Rızık artışı, göz nuru ve nimetlerin kalıcılığı için." },
+            { no: 37, ar: "الْعَلِيُّ", tr: "El-Aliyy", meaning: "Pek yüce, şanı ve derecesi en üstün.", zikir: "110", fazilet: "Manevi derece yükselmesi ve zihin açıklığı için." },
+            { no: 38, ar: "الْكَبِيرُ", tr: "El-Kebîr", meaning: "En büyük, ululuk sahibi.", zikir: "232", fazilet: "İtibar görmek ve halk arasında sevilmek için." },
+            { no: 39, ar: "الْحَفِيظُ", tr: "El-Hafîz", meaning: "Her şeyi koruma ve gözetim altında tutan.", zikir: "998", fazilet: "Kaza ve belalardan, her türlü tehlikeden korunmak için." },
+            { no: 40, ar: "الْمُقِيتُ", tr: "El-Mukît", meaning: "Yaratılmışların rızkını ve gıdasını veren.", zikir: "550", fazilet: "Maddi ihtiyaçların karşılanması ve bolluk için." },
+            { no: 41, ar: "الْحَسِيبُ", tr: "El-Hasîb", meaning: "Kullarının hesabını en iyi gören, kafi gelen.", zikir: "80", fazilet: "İşlerde kafilik, korkulardan güvende olmak için." },
+            { no: 42, ar: "الْجَلِيلُ", tr: "El-Celîl", meaning: "Celal ve azamet sahibi, yüce.", zikir: "73", fazilet: "Yüksek makam ve manevi kudret kazanmak için." },
+            { no: 43, ar: "الْكَرِيمُ", tr: "El-Kerîm", meaning: "Keremi, cömertliği ve ihsanı bol olan.", zikir: "270", fazilet: "Cömertlik ahlakı ve bolluk berekete ermek için." },
+            { no: 44, ar: "الرَّقِيبُ", tr: "El-Rakîb", meaning: "Her varlığı ve işi sürekli gözetim altında tutan.", zikir: "312", fazilet: "Emanetlerin korunması ve oto-kontrol için." },
+            { no: 45, ar: "الْمُجِيبُ", tr: "El-Mücîb", meaning: "Duaları ve çağrıları kabul eden.", zikir: "55", fazilet: "Yapılan duaların ve isteklerin kabulü için." },
+            { no: 46, ar: "الْوَاسِعُ", tr: "El-Vâsi'", meaning: "Rahmeti, ilmi ve kudreti her şeyi kuşatan.", zikir: "137", fazilet: "Ömür bolluğu, rızık genişliği ve sağlık için." },
+            { no: 47, ar: "الْحَكِيمُ", tr: "El-Hakîm", meaning: "Her işi hikmetli, faydalı ve yerli yerinde olan.", zikir: "78", fazilet: "İlim, hikmet ve hikmetli söz söyleme yeteneği için." },
+            { no: 48, ar: "الْوَدُودُ", tr: "El-Vedûd", meaning: "Kullarını çok seven, sevgiyi hak eden.", zikir: "20", fazilet: "İnsanlar arasında sevgi ve muhabbetin artması için." },
+            { no: 49, ar: "الْمَجِيدُ", tr: "El-Mecîd", meaning: "Şanı yüce ve ulu olan.", zikir: "57", fazilet: "Şeref, şan ve yüksek ahlaka kavuşmak için." },
+            { no: 50, ar: "الْبَاعِثُ", tr: "El-Bâis", meaning: "Ölüleri dirilten, kalpleri harekete geçiren.", zikir: "573", fazilet: "Gayret, azim ve tembellikten kurtulmak için." },
+            { no: 51, ar: "الشَّهِيدُ", tr: "El-Şehîd", meaning: "Her zaman ve her yerde hazır ve şahit olan.", zikir: "319", fazilet: "Hayırlı evlat yetiştirmek ve sadakat için." },
+            { no: 52, ar: "الْحَقُّ", tr: "El-Hakk", meaning: "Varlığı gerçek ve hiç değişmeyen.", zikir: "108", fazilet: "İşlerde sebat, dürüstlük ve hakikati bulmak için." },
+            { no: 53, ar: "الْوَكِيلُ", tr: "El-Vekîl", meaning: "Kendisine tevekkül edilen, en güvenilir vekil.", zikir: "66", fazilet: "Allah'a sığınıp işleri başarıyla sonuçlandırmak için." },
+            { no: 54, ar: "الْقَوِيُّ", tr: "El-Kaviyy", meaning: "Pek kuvvetli, kudreti sonsuz.", zikir: "116", fazilet: "Bedensel ve manevi güç, zorlukları yenmek için." },
+            { no: 55, ar: "الْمَتِينُ", tr: "El-Metîn", meaning: "Kudret ve kuvveti sağlam, sarsılmaz.", zikir: "500", fazilet: "Dayanıklılık, metanet ve işlerde istikrar için." },
+            { no: 56, ar: "الْوَلِيُّ", tr: "El-Veliyy", meaning: "İman edenlerin dostu ve yardımcısı.", zikir: "46", fazilet: "Allah'ın dostluğunu ve yardımını elde etmek için." },
+            { no: 57, ar: "الْحَمِيدُ", tr: "El-Hamîd", meaning: "Her türlü övgüye layık olan.", zikir: "376", fazilet: "Ahlak güzelliği ve övülmeye değer işler yapmak için." },
+            { no: 58, ar: "الْمُحْصِي", tr: "El-Muhsî", meaning: "Yarattığı her şeyin sayısını tam bilen.", zikir: "148", fazilet: "Zeka, hafıza kuvveti ve iş takibi için." },
+            { no: 59, ar: "الْمُبْدِئُ", tr: "El-Mübdi'", meaning: "Varlıkları maddesiz ve örneksiz ilk kez yaratan.", zikir: "56", fazilet: "İşlere sıfırdan hayırlı başlangıçlar yapmak için." },
+            { no: 60, ar: "الْمُعِيدُ", tr: "El-Muîd", meaning: "Yarattıklarını yok edip sonra tekrar dirilten.", zikir: "124", fazilet: "Gurbetteki sevdiklerine kavuşmak ve kayıp eşya için." },
+            { no: 61, ar: "الْمُحْيِي", tr: "El-Muhyî", meaning: "Can veren, hayat bağışlayan.", zikir: "68", fazilet: "Manevi olarak canlanmak ve sağlık bulmak için." },
+            { no: 62, ar: "الْمُمِيتُ", tr: "El-Mümît", meaning: "Canlıların ölümünü yaratan.", zikir: "490", fazilet: "Kötü arzuları ve nefsin haris isteklerini öldürmek için." },
+            { no: 63, ar: "الْحَيُّ", tr: "El-Hayy", meaning: "Diri, daima hayat sahibi ve ebedi.", zikir: "324", fazilet: "Ömür uzunluğu, sıhhat ve ruhsal canlılık için." },
+            { no: 64, ar: "الْقَيُّومُ", tr: "El-Kayyûm", meaning: "Kâinatı ayakta tutan ve yöneten.", zikir: "156", fazilet: "İşlerin düzenli gitmesi ve rızık sürekliliği için." },
+            { no: 65, ar: "الْوَاجِدُ", tr: "El-Vâcid", meaning: "Aradığı her şeyi dilediği an bulan.", zikir: "14", fazilet: "Arzulanan hedeflere ve kayıplara ulaşmak için." },
+            { no: 66, ar: "الْمَاجِدُ", tr: "El-Mâcid", meaning: "Kadr ü kıymeti yüce, cömert ve şanlı.", zikir: "48", fazilet: "Şeref, itibar ve kalp temizliği için." },
+            { no: 67, ar: "الْوَاحِدُ", tr: "El-Vâhid", meaning: "Zatında, sıfatlarında ortağı olmayan tek.", zikir: "19", fazilet: "Kalp huzuru ve iman selameti için." },
+            { no: 68, ar: "الصَّمَدُ", tr: "El-Samed", meaning: "Her şeyin kendisine muhtaç olduğu, kendisi kimseye muhtaç olmayan.", zikir: "134", fazilet: "Kimseye muhtaç olmamak ve hacetlerin görülmesi için." },
+            { no: 69, ar: "الْقَادِرُ", tr: "El-Kadir", meaning: "Dilediğini her şeye gücü yeten.", zikir: "305", fazilet: "Güç yetirilemeyen işlerin kolaylaşması için." },
+            { no: 70, ar: "الْمُقْتَدِرُ", tr: "El-Muktedir", meaning: "Kuvvet ve kudret sahipleri üzerinde dilediği gibi tasarruf eden.", zikir: "744", fazilet: "İşlerde başarı ve mutlak hakimiyet için." },
+            { no: 71, ar: "الْمُقَدِّمُ", tr: "El-Mukaddim", meaning: "Dilediğini öne geçiren, öne alan.", zikir: "184", fazilet: "Hayırlı işlerde öne geçmek ve yükselmek için." },
+            { no: 72, ar: "الْمُؤَخِّرُ", tr: "El-Muahhir", meaning: "Dilediğini arkaya bırakan, erteleyen.", zikir: "846", fazilet: "Kötü alışkanlıklardan uzaklaşmak ve sabır için." },
+            { no: 73, ar: "الْأَوَّلُ", tr: "El-Evvel", meaning: "Varlığının başlangıcı olmayan, ilk.", zikir: "37", fazilet: "Hayırlı işlerin ilk adımlarında başarı için." },
+            { no: 74, ar: "الْآخِرُ", tr: "El-Âhir", meaning: "Varlığının sonu olmayan, ebedi son.", zikir: "801", fazilet: "Ömrü hayırla tamamlamak ve imanla göçmek için." },
+            { no: 75, ar: "الظَّاهِرُ", tr: "El-Zâhir", meaning: "Varlığı açık delillerle bilinen.", zikir: "1106", fazilet: "Hakikati görmek ve basiret açıklığı için." },
+            { no: 76, ar: "الْبَاطِنُ", tr: "El-Bâtın", meaning: "Mahiyeti akıllarca gizli olan, iç yüzünü bilen.", zikir: "62", fazilet: "Nefis terbiyesi ve iç huzuru için." },
+            { no: 77, ar: "الْوَالِي", tr: "El-Vâlî", meaning: "Kâinatı ve bütün olayları tek başına yöneten.", zikir: "47", fazilet: "Yönetimde başarı ve tehlikelerden korunmak için." },
+            { no: 78, ar: "الْمُتَعَالِي", tr: "El-Müteâlî", meaning: "Akılların tasavvur edebileceği her şeyden yüce.", zikir: "551", fazilet: "Manevi makamların en üstüne çıkmak için." },
+            { no: 79, ar: "الْبَرُّ", tr: "El-Berr", meaning: "İyilik ve ihsanı bol olan.", zikir: "202", fazilet: "Kötülüklerden korunmak ve ahlak güzelliği için." },
+            { no: 80, ar: "التَّوَّابُ", tr: "El-Tevvâb", meaning: "Tövbeleri kabul eden ve günahları bağışlayan.", zikir: "409", fazilet: "İhlasla tövbe etmek ve duaların kabulü için." },
+            { no: 81, ar: "الْمُنْتَقِمُ", tr: "El-Müntekim", meaning: "Suçluları adaletiyle cezalandıran.", zikir: "630", fazilet: "Zalimlerin şerrinden intikam almak ve adalet için." },
+            { no: 82, ar: "الْعَفُوُّ", tr: "El-Afüvv", meaning: "Affeden, günahları bağışlayan.", zikir: "156", fazilet: "Affolunmak ve kalbi huzura kavuşturmak için." },
+            { no: 83, ar: "الرَّءُوفُ", tr: "El-Raûf", meaning: "Çok şefkatli, merhamet sahibi.", zikir: "286", fazilet: "Şefkatli olmak, merhamet görmek ve huzur için." },
+            { no: 84, ar: "مَالِكُ الْمُلْكِ", tr: "Mâlikü'l-Mülk", meaning: "Mülkün ve kâinatın ebedi sahibi.", zikir: "212", fazilet: "Maddi bolluk, rızık ve mülk güvenliği için." },
+            { no: 85, ar: "ذُوَ الْجَلَالِ وَالْإِكْرَامِ", tr: "Zü'l-Celâli ve'l-İkrâm", meaning: "Hem azamet sahibi hem de ikram sahibi.", zikir: "1100", fazilet: "Saygınlık kazanmak ve dileklerin kabulü için." },
+            { no: 86, ar: "الْمُقْسِطُ", tr: "El-Muksit", meaning: "Bütün işlerini adaletle ve denk yapan.", zikir: "209", fazilet: "Eşler arası uyum ve adalet duygusu için." },
+            { no: 87, ar: "الْجَامِعُ", tr: "El-Câmi'", meaning: "İstediğini istediği gün ve yerde toplayan.", zikir: "114", fazilet: "Kayıp eşyaları bulmak veya sevdikleriyle birleşmek için." },
+            { no: 88, ar: "الْغَنِيُّ", tr: "El-Ganiyy", meaning: "Her şeyden zengin, hiçbir şeye muhtaç olmayan.", zikir: "1060", fazilet: "Gönül zenginliği, bolluk ve rızık genişliği için." },
+            { no: 89, ar: "الْمُغْنِي", tr: "El-Muğnî", meaning: "Dilediğine zenginlik ve bolluk veren.", zikir: "1100", fazilet: "Geçim sıkıntısından kurtulmak ve zenginlik için." },
+            { no: 90, ar: "الْمَانِعُ", tr: "El-Mâni'", meaning: "Kötü şeylerin gerçekleşmesine engel olan.", zikir: "161", fazilet: "Belalardan, kazalardan ve zararlı durumlardan korunmak için." },
+            { no: 91, ar: "الضَّارُّ", tr: "El-Dârr", meaning: "Dilediğine elem ve zarar veren (imtihan için).", zikir: "1001", fazilet: "Zararlı kişilerin şerrinden uzak kalmak için." },
+            { no: 92, ar: "النَّافِعُ", tr: "El-Nâfi'", meaning: "Hayır ve menfaat verici şeyleri yaratan.", zikir: "201", fazilet: "Hastalıkklardan şifa bulmak ve hayırlı işler için." },
+            { no: 93, ar: "النُّورُ", tr: "El-Nûr", meaning: "Kâinatı aydınlatn, simalara nur veren.", zikir: "256", fazilet: "Kalbin ve yüzün nurlanması, basiret açıklığı için." },
+            { no: 94, ar: "الْهَادِي", tr: "El-Hâdî", meaning: "Hidayet veren, doğru yolu gösteren.", zikir: "400", fazilet: "Doğru yolu bulmak ve çocukların hidayeti için." },
+            { no: 95, ar: "الْبَدِيعُ", tr: "El-Bedî'", meaning: "Örneksiz, eşsiz güzellikte yaratan.", zikir: "86", fazilet: "Manevi keşifler, zihinsel yenilik ve başarı için." },
+            { no: 96, ar: "الْبَاقِي", tr: "El-Bâkî", meaning: "Varlığının sonu olmayan, ebedi.", zikir: "113", fazilet: "Ömrün bereketli olması ve kalıcılık için." },
+            { no: 97, ar: "الْوَارِثُ", tr: "El-Vâris", meaning: "Her şeyin hakiki varisi.", zikir: "707", fazilet: "Malın bereketli olması ve hayırlı evlatlar için." },
+            { no: 98, ar: "الرَّشِيدُ", tr: "El-Reşîd", meaning: "Doğru yolu gösteren, en güzel şekilde irşat eden.", zikir: "514", fazilet: "Kötü alışkanlıklardan kurtulmak ve olgunluk için." },
+            { no: 99, ar: "الصَّبُورُ", tr: "El-Sabûr", meaning: "Cezada acele etmeyen, pek sabırlı.", zikir: "298", fazilet: "Zorluklara karşı direnç, sabır ve metanet için." }
+        ];
+
+        function renderEsmalar(list) {
+            const grid = document.getElementById('esmaGrid');
+            grid.innerHTML = '';
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'esma-card';
+                card.innerHTML = `
+                    <div class="esma-number">${item.no}</div>
+                    <button class="audio-btn" onclick="playAudio('${item.tr}')" title="Arapça Okunuşunu Dinle">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <div class="arabic-name">${item.ar}</div>
+                    <div class="transliteration">${item.tr}</div>
+                    <div class="meaning">${item.meaning}</div>
+                    <div class="details-box">
+                        <p><strong>Zikir Adedi:</strong> ${item.zikir} defa</p>
+                        <p><strong>Fazileti:</strong> ${item.fazilet}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function playAudio(nameText) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(nameText);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Tarayıcınız sesli okuma özelliğini desteklemiyor.");
+            }
+        }
+
+        function playBakara() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const text = document.getElementById('bakaraText').innerText.replace(/\(\d+\)/g, '');
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playInshirah() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const text = document.getElementById('inshirahText').innerText.replace(/\(\d+\)/g, '');
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function filterNames() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = esmaList.filter(item => 
+                item.tr.toLowerCase().includes(query) || 
+                item.meaning.toLowerCase().includes(query) ||
+                item.ar.includes(query)
+            );
+            renderEsmalar(filtered);
+        }
+
+        renderEsmalar(esmaList);
+    </script>
+</body>
+</html>
