@@ -73,7 +73,7 @@
                 grid-template-columns: 1fr;
             }
             .side-panel {
-                display: none; 
+                display: block; /* Mobilde de ayetlerin görünmesi sağlandı */
             }
         }
 
@@ -289,7 +289,6 @@
             color: var(--accent);
         }
 
-        /* ZİKİR SAYACI STİLLERİ */
         .counter-section {
             margin-top: 12px;
             padding-top: 10px;
@@ -461,7 +460,7 @@
             { no: 55, ar: "الْمَتِينُ", tr: "El-Metîn", meaning: "Kudret ve kuvveti sağlam, sarsılmaz.", zikir: 500, fazilet: "Dayanıklılık, metanet ve işlerde istikrar için." },
             { no: 56, ar: "الْوَلِيُّ", tr: "El-Veliyy", meaning: "İman edenlerin dostu ve yardımcısı.", zikir: 46, fazilet: "Allah'ın dostluğunu ve yardımını elde etmek için." },
             { no: 57, ar: "الْحَمِيدُ", tr: "El-Hamîd", meaning: "Her türlü övgüye layık olan.", zikir: 376, fazilet: "Ahlak güzelliği ve övülmeye değer işler yapmak için." },
-            { no: 58, ar: "الْمُحْصِي", tr: "El-Muhsî", meaning: "Yarattığı her şeyin sayısını tam bilen.", zikir: 148, fazilet: "Zeka, hafıza kuvveti ve iş takibi için." },
+            { no: 58, ar: "الْمُحْصِي", tr: "El-Muhsî", meaning: "Yارattığı her şeyin sayısını tam bilen.", zikir: 148, fazilet: "Zeka, hafıza kuvveti ve iş takibi için." },
             { no: 59, ar: "الْمُبْدِئُ", tr: "El-Mübdi'", meaning: "Varlıkları maddesiz ve örneksiz ilk kez yaratan.", zikir: 56, fazilet: "İşlere sıfırdan hayırlı başlangıçlar yapmak için." },
             { no: 60, ar: "الْمُعِيدُ", tr: "El-Muîd", meaning: "Yarattıklarını yok edip sonra tekrar dirilten.", zikir: 124, fazilet: "Gurbetteki sevdiklerine kavuşmak ve kayıp eşya için." },
             { no: 61, ar: "الْمُحْيِي", tr: "El-Muhyî", meaning: "Can veren, hayat bağışlayan.", zikir: 68, fazilet: "Manevi olarak canlanmak ve sağlık bulmak için." },
@@ -505,10 +504,9 @@
             { no: 99, ar: "الصَّبُورُ", tr: "El-Sabûr", meaning: "Cezada acele etmeyen, pek sabırlı.", zikir: 298, fazilet: "Zorluklara karşı direnç, sabır ve metanet için." }
         ];
 
-        // Her ismin anlık sayaç durumunu tutmak için obje
         const counters = {};
         esmaList.forEach(item => {
-            counters[item.no] = item.zikir; // Başlangıçta toplam zikir adedi kadar
+            counters[item.no] = item.zikir;
         });
 
         function renderEsmalar(list) {
@@ -543,7 +541,6 @@
             });
         }
 
-        // Sayaç azaltma fonksiyonu
         function decrementCounter(no, maxZikir) {
             if (counters[no] > 0) {
                 counters[no]--;
