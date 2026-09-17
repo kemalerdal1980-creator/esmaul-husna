@@ -73,7 +73,7 @@
                 grid-template-columns: 1fr;
             }
             .side-panel {
-                display: block; /* Mobilde de ayetlerin görünmesi sağlandı */
+                display: block; 
             }
         }
 
@@ -294,27 +294,33 @@
             padding-top: 10px;
             border-top: 1px dashed rgba(212, 175, 55, 0.3);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .counter-info {
+        .counter-stats {
+            display: flex;
+            justify-content: space-between;
             font-size: 0.8rem;
             color: var(--text-muted);
-            text-align: left;
         }
 
-        .counter-info span {
+        .counter-stats span {
             color: var(--accent);
             font-weight: 700;
-            font-size: 1rem;
+        }
+
+        .counter-actions {
+            display: flex;
+            gap: 8px;
         }
 
         .counter-btn {
+            flex: 1;
             background: var(--accent);
             color: var(--primary-dark);
             border: none;
-            padding: 8px 14px;
+            padding: 8px 10px;
             border-radius: 8px;
             font-weight: 700;
             font-size: 0.85rem;
@@ -322,10 +328,27 @@
             transition: all 0.2s;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
         }
 
-        .counter-btn:active {
+        .reset-btn {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--accent);
+            border: 1px solid var(--border-gold);
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: rgba(212, 175, 55, 0.3);
+        }
+
+        .counter-btn:active, .reset-btn:active {
             transform: scale(0.95);
         }
 
@@ -352,11 +375,11 @@
 <body>
 
     <header>
-        <h1>ESMAÜ'ل-HÜSNA</h1>
-        <p>Allah'ın 99 Güzel İsmi ve Faziletleri</p>
+        <h1>ESMAُّ'ل-HÜSNA</h1>
+        <p>Allah'ın 99 Güzel İsmi ve Zikir Takibi</p>
     </header>
 
-    <div class="main-layout">
+    <div class="main-layout" style="margin-top: 25px;">
         <!-- SOL PANEL: Bakara Suresi 285-286 -->
         <div class="side-panel">
             <div class="panel-header">
@@ -403,110 +426,113 @@
 
     <script>
         const esmaList = [
-            { no: 1, ar: "اللَّهُ", tr: "Allah", meaning: "Eksiksiz sıfatların sahibi olan tek ilah.", zikir: 100, fazilet: "Kalp huzuru ve manevi güç için zikredilir." },
-            { no: 2, ar: "الرَّحْمٰنُ", tr: "Er-Rahmân", meaning: "Dünyada bütün mühitlere merhamet eden.", zikir: 298, fazilet: "Unutkanlığın giderilmesi ve kalp katılığının gitmesi için." },
-            { no: 3, ar: "الرَّحِيمُ", tr: "Er-Rahîm", meaning: "Ahirette sadece müminlere merhamet eden.", zikir: 258, fazilet: "Rızık bolluğu ve halkın sevgisini kazanmak için." },
-            { no: 4, ar: "الْمَلِكُ", tr: "El-Melik", meaning: "Mülkün ve kâinatın gerçek sahibi, meliki.", zikir: 90, fazilet: "Maddi ve manevi güç, itibar ve bolluk için." },
-            { no: 5, ar: "الْقُدُّوسُ", tr: "El-Kuddûs", meaning: "Her türlü noksanlıktan uzak ve mukaddes.", zikir: 170, fazilet: "Kalp temizliği ve vesveseden kurtulmak için." },
-            { no: 6, ar: "السَّلَامُ", tr: "Es-Selâm", meaning: "Her türlü esenlik ve selamet veren.", zikir: 131, fazilet: "Korkulardan emin olmak ve şifa bulmak için." },
-            { no: 7, ar: "الْمُؤْمِنُ", tr: "El-Mü'min", meaning: "Güven veren, emniyete kavuşturan.", zikir: 137, fazilet: "Kötü kazalardan ve tehlikelerden korunmak için." },
-            { no: 8, ar: "الْمُهَيْمِنُ", tr: "El-Müheymin", meaning: "Gözeten ve koruyan, her şeye şahit olan.", zikir: 145, fazilet: "Gizli düşmanlardan korunmak ve yüksek makam için." },
-            { no: 9, ar: "الْعَزِيزُ", tr: "El-Azîz", meaning: "İzzet sahibi, mutlak galip ve mağlup edilemeyen.", zikir: 94, fazilet: "Onur, azamet ve kimseye muhtaç olmamak için." },
-            { no: 10, ar: "الْجَبَّارُ", tr: "El-Cebbâr", meaning: "Dilediğini yapan, hükmüne karşı gelinemeyen.", zikir: 206, fazilet: "Zalimlerin zulmünden korunmak ve isteklerin kabulü için." },
-            { no: 11, ar: "الْمُتَكَبِّرُ", tr: "El-Mütekebbir", meaning: "Büyüklükte eşi olmayan, ululuk sahibi.", zikir: 662, fazilet: "Saygınlık kazanmak ve hayırlı işlerde muvaffakiyet." },
-            { no: 12, ar: "الْخَالِقُ", tr: "El-Hâlık", meaning: "Yaratan, yoktan var eden.", zikir: 731, fazilet: "İşlerde başarı ve zihin açıklığı için." },
-            { no: 13, ar: "الْبَارِئُ", tr: "El-Bâri'", meaning: "Her şeyi kusursuz ve uyumlu yaratan.", zikir: 213, fazilet: "Sanat işlerinde ve projelerde kolaylık için." },
-            { no: 14, ar: "الْمُصَوِّرُ", tr: "El-Musavvir", meaning: "Varlıklara şekil ve suret veren.", zikir: 336, fazilet: "Maksatlara ulaşmak ve güzel ahlak için." },
-            { no: 15, ar: "الْغَفَّارُ", tr: "El-Gaffâr", meaning: "Günahları örten ve çok bağışlayan.", zikir: 1281, fazilet: "Günahların affı ve kalbin nurlanması için." },
-            { no: 16, ar: "الْقَهَّارُ", tr: "El-Kahhâr", meaning: "Her şeye ve her konuya hakim, galip.", zikir: 306, fazilet: "Nefsin kötülüklerinden ve düşmanlardan kurtulmak için." },
-            { no: 17, ar: "الْوَهَّابُ", tr: "El-Vehhâb", meaning: "Karşılıksız bol bol bağışlarda bulunan.", zikir: 14, fazilet: "Rızık darlığı çekenler ve maddi bolluk için." },
-            { no: 18, ar: "الرَّزَّاقُ", tr: "El-Rezzâk", meaning: "Bütün mahlukata rızık veren.", zikir: 308, fazilet: "Bol ve bereketli rızık kapılarının açılması için." },
-            { no: 19, ar: "الْفَتَّاحُ", tr: "El-Fettâh", meaning: "Her türlü müşkülleri açan ve kolaylaştıran.", zikir: 489, fazilet: "Maddi ve manevi hayır kapılarının açılması için." },
-            { no: 20, ar: "الْعَلِيمُ", tr: "El-Alîm", meaning: "Her şeyi en ince detayına kadar bilen.", zikir: 150, fazilet: "İlim artışı, hafıza ve zeka açıklığı için." },
-            { no: 21, ar: "الْقَابِضُ", tr: "El-Kâbıd", meaning: "Dilediğinin rızkını daraltan, sıkan.", zikir: 903, fazilet: "Zalimlerin şerrinden korunmak için." },
-            { no: 22, ar: "الْبَاسِطُ", tr: "El-Bâsıt", meaning: "Dilediğinin rızkını genişleten, açan.", zikir: 72, fazilet: "Rızık bolluğu ve huzur için." },
-            { no: 23, ar: "الْخَافِضُ", tr: "El-Hâfıd", meaning: "Seviyeyi düşüren, alçaltan.", zikir: 1481, fazilet: "Kötülerin ve nankörlerin şerrinden emin olmak için." },
-            { no: 24, ar: "الرَّافِعُ", tr: "El-Râfi'", meaning: "Şeref veren, yükselten.", zikir: 351, fazilet: "Makam ve itibar sahibi olmak, kötülükten korunmak." },
-            { no: 25, ar: "الْمُعِزُّ", tr: "El-Muiz", meaning: "Dilediğine izzet ve şeref veren.", zikir: 117, fazilet: "Halk arasında saygın ve değerli olmak için." },
-            { no: 26, ar: "الْمُذِلُّ", tr: "El-Müzil", meaning: "Dilediğini zillete düşüren, hor kılan.", zikir: 770, fazilet: "Hasetçi ve düşmanların kibrini kırmak için." },
-            { no: 27, ar: "السَّمِيعُ", tr: "El-Semî'", meaning: "Her şeyi en iyi işiten.", zikir: 180, fazilet: "Duaların kabulü ve işitme sağlığı için." },
-            { no: 28, ar: "الْبَصِيرُ", tr: "El-Basîr", meaning: "Her şeyi en ince detayına kadar gören.", zikir: 112, fazilet: "İşlerin iç yüzünü görmek ve basiret açıklığı." },
-            { no: 29, ar: "الْحَكَمُ", tr: "El-Hakem", meaning: "Mutlak hakim, hak ile batılı ayıran.", zikir: 68, fazilet: "Haklı davaları kazanmak ve adalet için." },
-            { no: 30, ar: "الْعَدْلُ", tr: "El-Adl", meaning: "Mutlak adalet sahibi.", zikir: 104, fazilet: "Adil olmak ve hakkaniyetli işler yapmak için." },
-            { no: 31, ar: "اللَّطِيفُ", tr: "El-Lâtîf", meaning: "Lütuf sahibi, kullarının işlerinin inceliğini bilen.", zikir: 129, fazilet: "İşlerin kolaylaşması, gizli hayırlara ulaşmak için." },
-            { no: 32, ar: "الْخَبِيرُ", tr: "El-Habîr", meaning: "Her şeyin iç yüzünden haberdar olan.", zikir: 812, fazilet: "Gizli olayları ve niyetleri öğrenmek için." },
-            { no: 33, ar: "الْحَلِيمُ", tr: "El-Halîm", meaning: "Cezada acele etmeyen, yumuşak huylu.", zikir: 88, fazilet: "Öfkeyi yenmek, ahlak güzelliği ve sükunet için." },
-            { no: 34, ar: "الْعَظِيمُ", tr: "El-Azîm", meaning: "Pek yüce, büyüklükte benzeri olmayan.", zikir: 1020, fazilet: "Saygınlık kazanmak ve ruhsal olgunluk için." },
-            { no: 35, ar: "الْغَفُورُ", tr: "El-Gafûr", meaning: "Affı ve mağfireti bol olan.", zikir: 1286, fazilet: "Günahların bağışlanması ve sıkıntılardan kurtulmak için." },
-            { no: 36, ar: "الشَّكُورُ", tr: "El-Şekûr", meaning: "Az amele çok sevap ve ihsan veren.", zikir: 526, fazilet: "Rızık artışı, göz nuru ve nimetlerin kalıcılığı için." },
-            { no: 37, ar: "الْعَلِيُّ", tr: "El-Aliyy", meaning: "Pek yüce, şanı ve derecesi en üstün.", zikir: 110, fazilet: "Manevi derece yükselmesi ve zihin açıklığı için." },
-            { no: 38, ar: "الْكَبِيرُ", tr: "El-Kebîr", meaning: "En büyük, ululuk sahibi.", zikir: 232, fazilet: "İtibar görmek ve halk arasında sevilmek için." },
-            { no: 39, ar: "الْحَفِيظُ", tr: "El-Hafîz", meaning: "Her şeyi koruma ve gözetim altında tutan.", zikir: 998, fazilet: "Kaza ve belalardan, her türlü tehlikeden korunmak için." },
-            { no: 40, ar: "الْمُقِيتُ", tr: "El-Mukît", meaning: "Yaratılmışların rızkını ve gıdasını veren.", zikir: 550, fazilet: "Maddi ihtiyaçların karşılanması ve bolluk için." },
-            { no: 41, ar: "الْحَسِيبُ", tr: "El-Hasîb", meaning: "Kullarının hesabını en iyi gören, kafi gelen.", zikir: 80, fazilet: "İşlerde kafilik, korkulardan güvende olmak için." },
-            { no: 42, ar: "الْجَلِيلُ", tr: "El-Celîl", meaning: "Celal ve azamet sahibi, yüce.", zikir: 73, fazilet: "Yüksek makam ve manevi kudret kazanmak için." },
-            { no: 43, ar: "الْكَرِيمُ", tr: "El-Kerîm", meaning: "Keremi, cömertliği ve ihsanı bol olan.", zikir: 270, fazilet: "Cömertlik ahlakı ve bolluk berekete ermek için." },
-            { no: 44, ar: "الرَّقِيبُ", tr: "El-Rakîb", meaning: "Her varlığı ve işi sürekli gözetim altında tutan.", zikir: 312, fazilet: "Emanetlerin korunması ve oto-kontrol için." },
-            { no: 45, ar: "الْمُجِيبُ", tr: "El-Mücîb", meaning: "Duaları ve çağrıları kabul eden.", zikir: 55, fazilet: "Yapılan duaların ve isteklerin kabulü için." },
-            { no: 46, ar: "الْوَاسِعُ", tr: "El-Vâsi'", meaning: "Rahmeti, ilmi ve kudreti her şeyi kuşatan.", zikir: 137, fazilet: "Ömür bolluğu, rızık genişliği ve sağlık için." },
-            { no: 47, ar: "الْحَكِيمُ", tr: "El-Hakîm", meaning: "Her işi hikmetli, faydalı ve yerli yerinde olan.", zikir: 78, fazilet: "İlim, hikmet ve hikmetli söz söyleme yeteneği için." },
-            { no: 48, ar: "الْوَدُودُ", tr: "El-Vedûd", meaning: "Kullarını çok seven, sevgiyi hak eden.", zikir: 20, fazilet: "İnsanlar arasında sevgi ve muhabbetin artması için." },
-            { no: 49, ar: "الْمَجِيدُ", tr: "El-Mecîd", meaning: "Şanı yüce ve ulu olan.", zikir: 57, fazilet: "Şeref, şan ve yüksek ahlaka kavuşmak için." },
-            { no: 50, ar: "الْبَاعِثُ", tr: "El-Bâis", meaning: "Ölüleri dirilten, kalpleri harekete geçiren.", zikir: 573, fazilet: "Gayret, azim ve tembellikten kurtulmak için." },
-            { no: 51, ar: "الشَّهِيدُ", tr: "El-Şehîd", meaning: "Her zaman ve her yerde hazır ve şahit olan.", zikir: 319, fazilet: "Hayırlı evlat yetiştirmek ve sadakat için." },
-            { no: 52, ar: "الْحَقُّ", tr: "El-Hakk", meaning: "Varlığı gerçek ve hiç değişmeyen.", zikir: 108, fazilet: "İşlerde sebat, dürüstlük ve hakikati bulmak için." },
-            { no: 53, ar: "الْوَكِيلُ", tr: "El-Vekîl", meaning: "Kendisine tevekkül edilen, en güvenilir vekil.", zikir: 66, fazilet: "Allah'a sığınıp işleri başarıyla sonuçlandırmak için." },
-            { no: 54, ar: "الْقَوِيُّ", tr: "El-Kaviyy", meaning: "Pek kuvvetli, kudreti sonsuz.", zikir: 116, fazilet: "Bedensel ve manevi güç, zorlukları yenmek için." },
-            { no: 55, ar: "الْمَتِينُ", tr: "El-Metîn", meaning: "Kudret ve kuvveti sağlam, sarsılmaz.", zikir: 500, fazilet: "Dayanıklılık, metanet ve işlerde istikrar için." },
-            { no: 56, ar: "الْوَلِيُّ", tr: "El-Veliyy", meaning: "İman edenlerin dostu ve yardımcısı.", zikir: 46, fazilet: "Allah'ın dostluğunu ve yardımını elde etmek için." },
-            { no: 57, ar: "الْحَمِيدُ", tr: "El-Hamîd", meaning: "Her türlü övgüye layık olan.", zikir: 376, fazilet: "Ahlak güzelliği ve övülmeye değer işler yapmak için." },
-            { no: 58, ar: "الْمُحْصِي", tr: "El-Muhsî", meaning: "Yارattığı her şeyin sayısını tam bilen.", zikir: 148, fazilet: "Zeka, hafıza kuvveti ve iş takibi için." },
-            { no: 59, ar: "الْمُبْدِئُ", tr: "El-Mübdi'", meaning: "Varlıkları maddesiz ve örneksiz ilk kez yaratan.", zikir: 56, fazilet: "İşlere sıfırdan hayırlı başlangıçlar yapmak için." },
-            { no: 60, ar: "الْمُعِيدُ", tr: "El-Muîd", meaning: "Yarattıklarını yok edip sonra tekrar dirilten.", zikir: 124, fazilet: "Gurbetteki sevdiklerine kavuşmak ve kayıp eşya için." },
-            { no: 61, ar: "الْمُحْيِي", tr: "El-Muhyî", meaning: "Can veren, hayat bağışlayan.", zikir: 68, fazilet: "Manevi olarak canlanmak ve sağlık bulmak için." },
-            { no: 62, ar: "الْمُمِيتُ", tr: "El-Mümît", meaning: "Canlıların ölümünü yaratan.", zikir: 490, fazilet: "Kötü arzuları ve nefsin haris isteklerini öldürmek için." },
-            { no: 63, ar: "الْحَيُّ", tr: "El-Hayy", meaning: "Diri, daima hayat sahibi ve ebedi.", zikir: 324, fazilet: "Ömür uzunluğu, sıhhat ve ruhsal canlılık için." },
-            { no: 64, ar: "الْقَيُّومُ", tr: "El-Kayyûm", meaning: "Kâinatı ayakta tutan ve yöneten.", zikir: 156, fazilet: "İşlerin düzenli gitmesi ve rızık sürekliliği için." },
-            { no: 65, ar: "الْوَاجِدُ", tr: "El-Vâcid", meaning: "Aradığı her şeyi dilediği an bulan.", zikir: 14, fazilet: "Arzulanan hedeflere ve kayıplara ulaşmak için." },
-            { no: 66, ar: "الْمَاجِدُ", tr: "El-Mâcid", meaning: "Kadr ü kıymeti yüce, cömert ve şanlı.", zikir: 48, fazilet: "Şeref, itibar ve kalp temizliği için." },
-            { no: 67, ar: "الْوَاحِدُ", tr: "El-Vâhid", meaning: "Zatında, sıfatlarında ortağı olmayan tek.", zikir: 19, fazilet: "Kalp huzuru ve iman selameti için." },
-            { no: 68, ar: "الصَّمَدُ", tr: "El-Samed", meaning: "Her şeyin kendisine muhtaç olduğu, kendisi kimseye muhtaç olmayan.", zikir: 134, fazilet: "Kimseye muhtaç olmamak ve hacetlerin görülmesi için." },
-            { no: 69, ar: "الْقَادِرُ", tr: "El-Kadir", meaning: "Dilediğini her şeye gücü yeten.", zikir: 305, fazilet: "Güç yetirilemeyen işlerin kolaylaşması için." },
-            { no: 70, ar: "الْمُقْتَدِرُ", tr: "El-Muktedir", meaning: "Kuvvet ve kudret sahipleri üzerinde dilediği gibi tasarruf eden.", zikir: 744, fazilet: "İşlerde başarı ve mutlak hakimiyet için." },
-            { no: 71, ar: "الْمُقَدِّمُ", tr: "El-Mukaddim", meaning: "Dilediğini öne geçiren, öne alan.", zikir: 184, fazilet: "Hayırlı işlerde öne geçmek ve yükselmek için." },
-            { no: 72, ar: "الْمُؤَخِّرُ", tr: "El-Muahhir", meaning: "Dilediğini arkaya bırakan, erteleyen.", zikir: 846, fazilet: "Kötü alışkanlıklardan uzaklaşmak ve sabır için." },
-            { no: 73, ar: "الْأَوَّلُ", tr: "El-Evvel", meaning: "Varlığının başlangıcı olmayan, ilk.", zikir: 37, fazilet: "Hayırlı işlerin ilk adımlarında başarı için." },
-            { no: 74, ar: "الْآخِرُ", tr: "El-Âhir", meaning: "Varlığının sonu olmayan, ebedi son.", zikir: 801, fazilet: "Ömrü hayırla tamamlamak ve imanla göçmek için." },
-            { no: 75, ar: "الظَّاهِرُ", tr: "El-Zâhir", meaning: "Varlığı açık delillerle bilinen.", zikir: 1106, fazilet: "Hakikati görmek ve basiret açıklığı için." },
-            { no: 76, ar: "الْبَاطِنُ", tr: "El-Bâtın", meaning: "Mahiyeti akıllarca gizli olan, iç yüzünü bilen.", zikir: 62, fazilet: "Nefis terbiyesi ve iç huzuru için." },
-            { no: 77, ar: "الْوَالِي", tr: "El-Vâlî", meaning: "Kâinatı ve bütün olayları tek başına yöneten.", zikir: 47, fazilet: "Yönetimde başarı ve tehlikelerden korunmak için." },
-            { no: 78, ar: "الْمُتَعَالِي", tr: "El-Müteâlî", meaning: "Akılların tasavvur edebileceği her şeyden yüce.", zikir: 551, fazilet: "Manevi makamların en üstüne çıkmak için." },
-            { no: 79, ar: "الْبَرُّ", tr: "El-Berr", meaning: "İyilik ve ihsanı bol olan.", zikir: 202, fazilet: "Kötülüklerden korunmak ve ahlak güzelliği için." },
-            { no: 80, ar: "التَّوَّابُ", tr: "El-Tevvâb", meaning: "Tövbeleri kabul eden ve günahları bağışlayan.", zikir: 409, fazilet: "İhlasla tövbe etmek ve duaların kabulü için." },
-            { no: 81, ar: "الْمُنْتَقِمُ", tr: "El-Müntekim", meaning: "Suçluları adaletiyle cezalandıran.", zikir: 630, fazilet: "Zalimlerin şerrinden intikam almak ve adalet için." },
-            { no: 82, ar: "الْعَفُوُّ", tr: "El-Afüvv", meaning: "Affeden, günahları bağışlayan.", zikir: 156, fazilet: "Affolunmak ve kalbi huzura kavuşturmak için." },
-            { no: 83, ar: "الرَّءُوفُ", tr: "El-Raûf", meaning: "Çok şefkatli, merhamet sahibi.", zikir: 286, fazilet: "Şefkatli olmak, merhamet görmek ve huzur için." },
-            { no: 84, ar: "مَالِكُ الْمُلْكِ", tr: "Mâlikü'l-Mülk", meaning: "Mülkün ve kâinatın ebedi sahibi.", zikir: 212, fazilet: "Maddi bolluk, rızık ve mülk güvenliği için." },
-            { no: 85, ar: "ذُوَ الْجَلَالِ وَالْإِكْرَامِ", tr: "Zü'l-Celâli ve'l-İkrâm", meaning: "Hem azamet sahibi hem de ikram sahibi.", zikir: 1100, fazilet: "Saygınlık kazanmak ve dileklerin kabulü için." },
-            { no: 86, ar: "الْمُقْسِطُ", tr: "El-Muksit", meaning: "Bütün işlerini adaletle ve denk yapan.", zikir: 209, fazilet: "Eşler arası uyum ve adalet duygusu için." },
-            { no: 87, ar: "الْجَامِعُ", tr: "El-Câmi'", meaning: "İstediğini istediği gün ve yerde toplayan.", zikir: 114, fazilet: "Kayıp eşyaları bulmak veya sevdikleriyle birleşmek için." },
-            { no: 88, ar: "الْغَنِيُّ", tr: "El-Ganiyy", meaning: "Her şeyden zengin, hiçbir şeye muhtaç olmayan.", zikir: 1060, fazilet: "Gönül zenginliği, bolluk ve rızık genişliği için." },
-            { no: 89, ar: "الْمُغْنِي", tr: "El-Muğnî", meaning: "Dilediğine zenginlik ve bolluk veren.", zikir: 1100, fazilet: "Geçim sıkıntısından kurtulmak ve zenginlik için." },
-            { no: 90, ar: "الْمَانِعُ", tr: "El-Mâni'", meaning: "Kötü şeylerin gerçekleşmesine engel olan.", zikir: 161, fazilet: "Belalardan, kazalardan ve zararlı durumlardan korunmak için." },
-            { no: 91, ar: "الضَّارُّ", tr: "El-Dârr", meaning: "Dilediğine elem ve zarar veren (imtihan için).", zikir: 1001, fazilet: "Zararlı kişilerin şerrinden uzak kalmak için." },
-            { no: 92, ar: "النَّافِعُ", tr: "El-Nâfi'", meaning: "Hayır ve menfaat verici şeyleri yaratan.", zikir: 201, fazilet: "Hastalıkklardan şifa bulmak ve hayırlı işler için." },
-            { no: 93, ar: "النُّورُ", tr: "El-Nûr", meaning: "Kâinatı aydınlatn, simalara nur veren.", zikir: 256, fazilet: "Kalbin ve yüzün nurlanması, basiret açıklığı için." },
-            { no: 94, ar: "الْهَادِي", tr: "El-Hâdî", meaning: "Hidayet veren, doğru yolu gösteren.", zikir: 400, fazilet: "Doğru yolu bulmak ve çocukların hidayeti için." },
-            { no: 95, ar: "الْبَدِيعُ", tr: "El-Bedî'", meaning: "Örneksiz, eşsiz güzellikte yaratan.", zikir: 86, fazilet: "Manevi keşifler, zihinsel yenilik ve başarı için." },
-            { no: 96, ar: "الْبَاقِي", tr: "El-Bâkî", meaning: "Varlığının sonu olmayan, ebedi.", zikir: 113, fazilet: "Ömrün bereketli olması ve kalıcılık için." },
-            { no: 97, ar: "الْوَارِثُ", tr: "El-Vâris", meaning: "Her şeyin hakiki varisi.", zikir: 707, fazilet: "Malın bereketli olması ve hayırlı evlatlar için." },
-            { no: 98, ar: "الرَّشِيدُ", tr: "El-Reşîd", meaning: "Doğru yolu gösteren, en güzel şekilde irşat eden.", zikir: 514, fazilet: "Kötü alışkanlıklardan kurtulmak ve olgunluk için." },
-            { no: 99, ar: "الصَّبُورُ", tr: "El-Sabûr", meaning: "Cezada acele etmeyen, pek sabırlı.", zikir: 298, fazilet: "Zorluklara karşı direnç, sabır ve metanet için." }
+            { no: 1, ar: "اللَّهُ", tr: "Allah", meaning: "Eşi benzeri olmayan, bütün övgü ve ibadetlere layık olan tek ilah.", zikir: 66, fazilet: "Kalp huzuru ve manevi güç için zikredilir." },
+            { no: 2, ar: "الرَّحْمٰنُ", tr: "Er-Rahmân", meaning: "Dünyadaki tüm yaratılmışlara merhamet eden, şefkat gösteren.", zikir: 298, fazilet: "Unutkanlığın giderilmesi ve kalp katılığının gitmesi için." },
+            { no: 3, ar: "الرَّحِيمُ", tr: "Er-Rahîm", meaning: "Ahirette yalnızca müminlere sonsuz ikram ve merhamette bulunan.", zikir: 258, fazilet: "Rızık bolluğu ve halkın sevgisini kazanmak için." },
+            { no: 4, ar: "الْمَلِكُ", tr: "El-Melik", meaning: "Kainatın mutlak sahibi, mülk ve saltanatı sürekli olan sultan.", zikir: 90, fazilet: "Maddi and manevi güç, itibar and bolluk için." },
+            { no: 5, ar: "الْقُدُّوسُ", tr: "El-Kuddûs", meaning: "Her türlü eksiklikten, kusurdan and noksanlıktan tamamen uzak olan.", zikir: 170, fazilet: "Kalp temizliği and vesveseden kurtulmak için." },
+            { no: 6, ar: "السَّلَامُ", tr: "Es-Selâm", meaning: "Yarattıklarını her türlü tehlikeden selamette kılan, esenlik veren.", zikir: 131, fazilet: "Korkulardan emin olmak and şifa bulmak için." },
+            { no: 7, ar: "الْمُؤْمِنُ", tr: "El-Mü'min", meaning: "Kalplere iman and güven veren, kendisine sığınanları koruyan.", zikir: 136, fazilet: "Kötü kazalardan and tehlikelerden korunmak için." },
+            { no: 8, ar: "الْمُهَيْمِنُ", tr: "El-Müheymin", meaning: "Her şeyi görüp gözeten, koruyup barındıran and yöneten.", zikir: 145, fazilet: "Gizli düşmanlardan korunmak and yüksek makam için." },
+            { no: 9, ar: "الْعَزِيزُ", tr: "El-Azîz", meaning: "Mağlup edilmesi imkansız olan, mutlak güç and izzet sahibi.", zikir: 94, fazilet: "Onur, azamet and kimseye muhtaç olmamak için." },
+            { no: 10, ar: "الْجَبَّارُ", tr: "El-Cebbâr", meaning: "Kırılanları onaran, eksikleri tamamlayan, dilediğini zorla yaptıran.", zikir: 206, fazilet: "Zalimlerin zulmünden korunmak and isteklerin kabulü için." },
+            { no: 11, ar: "الْمُتَكَبِّرُ", tr: "El-Mütekebbir", meaning: "Azamet and yüceliğini her şeyde gösteren, benzersiz ulu.", zikir: 662, fazilet: "Saygınlık kazanmak and hayırlı işlerde muvaffakiyet." },
+            { no: 12, ar: "الْخَالِقُ", tr: "El-Hâlık", meaning: "Her şeyi yoktan var eden, yaratan.", zikir: 731, fazilet: "İşlerde başarı and zihin açıklığı için." },
+            { no: 13, ar: "الْبَارِئُ", tr: "El-Bâri'", meaning: "Her şeyi kusursuz, bir örneği olmadan and uyumlu yaratan.", zikir: 213, fazilet: "Sanat işlerinde and projelerde kolaylık için." },
+            { no: 14, ar: "الْمُصَوِّرُ", tr: "El-Musavvir", meaning: "Tasvir eden, her varlığa en uygun şekil and sureti veren.", zikir: 336, fazilet: "Maksatlara ulaşmak and güzel ahlak için." },
+            { no: 15, ar: "الْغَفَّارُ", tr: "El-Gaffâr", meaning: "Günahları çokça bağışlayan, örten and affeden.", zikir: 1281, fazilet: "Günahların affı and kalbin nurlanması için." },
+            { no: 16, ar: "الْقَهَّارُ", tr: "El-Kahhâr", meaning: "Her şeye galip gelen, mutlak iradesiyle her şeyi boyun eğdiren.", zikir: 306, fazilet: "Nefsin kötülüklerinden and düşmanlardan kurtulmak için." },
+            { no: 17, ar: "الْوَهَّابُ", tr: "El-Vehhâb", meaning: "Karşılıksız veren, nimet and lütufları durmaksızın ihsan eden.", zikir: 14, fazilet: "Rızık darlığı çekenler and maddi bolluk için." },
+            { no: 18, ar: "الرَّزَّاقُ", tr: "Er-Rezzâk", meaning: "Tüm canlıların rızkını veren, ihtiyaçlarını karşılayan.", zikir: 308, fazilet: "Bol and bereketli rızık kapılarının açılması için." },
+            { no: 19, ar: "الْفَتَّاحُ", tr: "El-Fettâh", meaning: "Kapıları açan, zorlukları kolaylaştıran, adaletle hükmeden.", zikir: 489, fazilet: "Maddi and manevi hayır kapılarının açılması için." },
+            { no: 20, ar: "الْعَلِيمُ", tr: "El-Alîm", meaning: "Gizli, açık, geçmiş and gelecek her şeyi en ince detayına kadar bilen.", zikir: 150, fazilet: "İlim artışı, hafıza and zeka açıklığı için." },
+            { no: 21, ar: "الْقَابِضُ", tr: "El-Kābıd", meaning: "Dilediğinin rızkını and canını daraltan, sıkan.", zikir: 903, fazilet: "Zalimlerin şerrinden korunmak için." },
+            { no: 22, ar: "الْبَاسِطُ", tr: "El-Bâsıt", meaning: "Dilediğinin rızkını genişleten, ferahlık and ömür veren.", zikir: 72, fazilet: "Rızık bolluğu and huzur için." },
+            { no: 23, ar: "الْخَافِضُ", tr: "El-Hâfıd", meaning: "Dereceleri alçaltan, kibirlileri cezalandırıp aşağıya indiren.", zikir: 1481, fazilet: "Kötülerin and nankörlerin şerrinden emin olmak için." },
+            { no: 24, ar: "الرَّافِعُ", tr: "Er-Râfi'", meaning: "Müminleri yükselten, şان and şeref vererek dereceleri artıran.", zikir: 351, fazilet: "Makam and itibar sahibi olmak, kötülükten korunmak." },
+            { no: 25, ar: "الْمُعِزُّ", tr: "El-Muiz", meaning: "Dilediğine izzet, şeref, itibar and güç bahşeden.", zikir: 117, fazilet: "Halk arasında saygın and değerli olmak için." },
+            { no: 26, ar: "الْمُذِلُّ", tr: "El-Müzil", meaning: "Dilediğini zillete düşüren, hor and hakir kılan.", zikir: 770, fazilet: "Hasetçi and düşmanların kibrini kırmak için." },
+            { no: 27, ar: "السَّمِيعُ", tr: "Es-Semî'", meaning: "Her şeyi en iyi işiten, duaları and gizli yakarışları duyan.", zikir: 180, fazilet: "Duaların kabulü and işitme sağlığı için." },
+            { no: 28, ar: "الْبَصِيرُ", tr: "El-Basîr", meaning: "Her şeyi en ince ayrıntısına kadar eksiksiz gören.", zikir: 302, fazilet: "İşlerin iç yüzünü görmek and basiret açıklığı." },
+            { no: 29, ar: "الْحَكَمُ", tr: "El-Hakem", meaning: "Mutlak hakim olan, hakkı bâtıldan ayıran and adaletle hükmeden.", zikir: 68, fazilet: "Haklı davaları kazanmak and adalet için." },
+            { no: 30, ar: "الْعَدْلُ", tr: "El-Adl", meaning: "Mutlak adalet sahibi, hiçbir varlığa asla zulmetmeyen.", zikir: 104, fazilet: "Adil olmak and hakkaniyetli işler yapmak için." },
+            { no: 31, ar: "اللَّطِيفُ", tr: "El-Latîf", meaning: "En ince işlerin detayını bilen, lütufkâr, kullarına sezdirmeden iyilik eden.", zikir: 129, fazilet: "İşlerin kolaylaşması, gizli hayırlara ulaşmak için." },
+            { no: 32, ar: "الْخَبِيرُ", tr: "El-Habîr", meaning: "Her şeyin iç yüzünden and gizli taraflarından haberdar olan.", zikir: 812, fazilet: "Gizli olayları and niyetleri öğrenmek için." },
+            { no: 33, ar: "الْحَلِيمُ", tr: "El-Halîm", meaning: "Cezalandırmada acele etmeyen, öfkesine mağlup olmayan, yumuşak davranan.", zikir: 88, fazilet: "Öfkeyi yenmek, ahlak güzelliği and sükunet için." },
+            { no: 34, ar: "الْعَظِيمُ", tr: "El-Azîm", meaning: "Zatının and sıfatlarının hakikati anlaşılamayacak kadar yüce olan.", zikir: 1020, fazilet: "Saygınlık kazanmak and ruhsal olgunluk için." },
+            { no: 35, ar: "الْغَفُورُ", tr: "El-Gafûr", meaning: "Mağfireti çok olan, kullarının günahlarını defalarca affeden.", zikir: 1286, fazilet: "Günahların bağışlanması and sıkıntılardan kurtulmak için." },
+            { no: 36, ar: "الشَّكُورُ", tr: "Eş-Şekûr", meaning: "Az amele çok sevap veren, şükredenlerin nimetlerini artıran.", zikir: 526, fazilet: "Rızık artışı, göz nuru and nimetlerin kalıcılığı için." },
+            { no: 37, ar: "الْعَلِيُّ", tr: "El-Aliyy", meaning: "Pek yüce, kendisinden daha üstün hiçbir varlık bulunmayan.", zikir: 110, fazilet: "Manevi derece yükselmesi and zihin açıklığı için." },
+            { no: 38, ar: "الْكَبِيرُ", tr: "El-Kebîr", meaning: "Azameti, büyüklüğü and şanı tasavvur edilemeyecek kadar büyük olan.", zikir: 232, fazilet: "İtibar görmek and halk arasında sevilmek için." },
+            { no: 39, ar: "الْحَفِيظُ", tr: "El-Hafîz", meaning: "Her şeyi koruyan, dengede tutan and amelleri zayi etmeden saklayan.", zikir: 998, fazilet: "Kaza and belalardan, her türlü tehlikeden korunmak için." },
+            { no: 40, ar: "الْمُقِيتُ", tr: "El-Mukît", meaning: "Her canlının azığını and gıdasını veren, her şeyi korumaya gücü yeten.", zikir: 550, fazilet: "Maddi ihtiyaçların karşılanması and bolluk için." },
+            { no: 41, ar: "الْحَسِيبُ", tr: "El-Hasîb", meaning: "Kullarının hesabını en iyi gören, her şeye tek başına yeten.", zikir: 80, fazilet: "İşlerde kafilik, korkulardan güvende olmak için." },
+            { no: 42, ar: "الْجَلِيلُ", tr: "El-Celîl", meaning: "Azamet, büyüklük and celal sıfatları en yüce olan.", zikir: 73, fazilet: "Yüksek makam and manevi kudret kazanmak için." },
+            { no: 43, ar: "الْكَرِيمُ", tr: "El-Kerîm", meaning: "Keremi, cömertliği and ihsanı bol olan, hiçbir karşılık beklemeden veren.", zikir: 270, fazilet: "Cömertlik ahlakı and bolluk berekete ermek için." },
+            { no: 44, ar: "الرَّقِيبُ", tr: "Er-Rakîb", meaning: "Her varlığı, her an kontrol altında tutan, gözeten and izleyen.", zikir: 312, fazilet: "Emanetlerin korunması and oto-kontrol için." },
+            { no: 45, ar: "الْمُجِيبُ", tr: "El-Mucîb", meaning: "Kendisine dua edenlerin isteklerine cevap veren, kabul eden.", zikir: 55, fazilet: "Yapılan duaların and isteklerin kabulü için." },
+            { no: 46, ar: "الْوَاسِعُ", tr: "El-Vâsi'", meaning: "İlmi, merhameti, lütfu and kudreti her şeyi kuşatacak kadar geniş olan.", zikir: 137, fazilet: "Ömür bolluğu, rızık genişliği and sağlık için." },
+            { no: 47, ar: "الْحَكِيمُ", tr: "El-Hakîm", meaning: "Her işi hikmetli olan, her şeyi yerli yerince and kusursuz yapan.", zikir: 78, fazilet: "İlim, hikmet and hikmetli söz söyleme yeteneği için." },
+            { no: 48, ar: "الْوَدُودُ", tr: "El-Vedûd", meaning: "Kullarını çok seven and sevilmeye en layık olan iyilik sahibi.", zikir: 20, fazilet: "İnsanlar arasında sevgi and muhabbetin artması için." },
+            { no: 49, ar: "الْمَجِيدُ", tr: "El-Mecîd", meaning: "Şanı pek yüce, nimeti and keremi sonsuz olan.", zikir: 57, fazilet: "Şeref, şan and yüksek ahlaka kavuşmak için." },
+            { no: 50, ar: "الشَّهِيدُ", tr: "Eş-Şehîd", meaning: "Her zaman and her yerde hazır olan, her şeye şahitlik eden.", zikir: 319, fazilet: "Hayırlı evlat yetiştirmek and sadakat için." },
+            { no: 51, ar: "الْبَاعِثُ", tr: "El-Bâis", meaning: "Ölüleri dirilten, peygamberler gönderen, kalpleri uyandıran.", zikir: 573, fazilet: "Gayret, azim and tembellikten kurtulmak için." },
+            { no: 52, ar: "الْحَقُّ", tr: "El-Hakk", meaning: "Varlığı gerçek olan, hiç değişmeyen, adaleti gerçekleştiren.", zikir: 108, fazilet: "İşlerde sebat, dürüstlük and hakikati bulmak için." },
+            { no: 53, ar: "الْوَكِيلُ", tr: "El-Vekîl", meaning: "Kendisine güvenilip dayananların işlerini en iyi şekilde sonuçlandıran.", zikir: 66, fazilet: "Allah'a sığınıp işleri başarıyla sonuçlandırmak için." },
+            { no: 54, ar: "الْقَوِيُّ", tr: "El-Kaviyy", meaning: "Sınırsız güç sahibi, kudretine hiçbir şekilde acziyet arız olmayan.", zikir: 116, fazilet: "Bedensel and manevi güç, zorlukları yenmek için." },
+            { no: 55, ar: "الْمَتِينُ", tr: "El-Metîn", meaning: "Çok güçlü, sarsılmaz, kudretinde hiçbir gevşeme olmayan.", zikir: 500, fazilet: "Dayanıklılık, metanet and işlerde istikrar için." },
+            { no: 56, ar: "الْوَلِيُّ", tr: "El-Veliyy", meaning: "Müminlerin dostu, onları seven and yardım eden yardımcısı.", zikir: 46, fazilet: "Allah'ın dostluğunu and yardımını elde etmek için." },
+            { no: 57, ar: "الْحَمِيدُ", tr: "El-Hamîd", meaning: "Her türlü övgüye, hamde and şükre tek layık olan.", zikir: 62, fazilet: "Ahlak güzelliği and övülmeye değer işler yapmak için." },
+            { no: 58, ar: "الْمُحْصِي", tr: "El-Muhsî", meaning: "Her şeyin sayısını, miktarını and detayını tek tek bilen.", zikir: 148, fazilet: "Zeka, hafıza kuvveti and iş takibi için." },
+            { no: 59, ar: "الْمُبْدِئُ", tr: "El-Mübdî", meaning: "Maddesiz and örneksiz olarak varlıkları ilk baştان yaratan.", zikir: 56, fazilet: "İşlere sıfırdan hayırlı başlangıçlar yapmak için." },
+            { no: 60, ar: "الْمُعِيدُ", tr: "El-Muîd", meaning: "Varlıkları yok ettikten sonra ahirette yeniden dirilten.", zikir: 124, fazilet: "Gurbetteki sevdiklerine kavuşmak and kayıp eşya için." },
+            { no: 61, ar: "الْمُحْيِي", tr: "El-Muhyî", meaning: "Can veren, hayatı yaratan and canlılığı sürdüren.", zikir: 46, fazilet: "Manevi olarak canlanmak and sağlık bulmak için." },
+            { no: 62, ar: "الْمُمِيتُ", tr: "El-Mümît", meaning: "Canlı bir varlığın hayatına son veren, ölümü yaratan.", zikir: 490, fazilet: "Kötü arzuları and nefsin haris isteklerini öldürmek için." },
+            { no: 63, ar: "الْحَيُّ", tr: "El-Hayy", meaning: "Ebedi and ezeli bir hayatla diri olan, can veren.", zikir: 18, fazilet: "Ömür uzunluğu, sıhhat and ruhsal canlılık için." },
+            { no: 64, ar: "الْقَيُّومُ", tr: "El-Kayyûm", meaning: "Gökleri, yeri and her şeyi ayakta tutan, varlığı kendinden olan.", zikir: 156, fazilet: "İşlerin düzenli gitmesi and rızık sürekliliği için." },
+            { no: 65, ar: "الْوَاجِدُ", tr: "El-Vâcid", meaning: "İstediğini istediği an bulan, hiçbir şeye ihtiyacı olmayan zengin.", zikir: 14, fazilet: "Arzulanan hedeflere and kayıplara ulaşmak için." },
+            { no: 66, ar: "الْمَاجِدُ", tr: "El-Mâcid", meaning: "Şan and şeref sahibi, keremi and cömertliği bol olan.", zikir: 48, fazilet: "Şeref, itibar and kalp temizliği için." },
+            { no: 67, ar: "الْوَاحِدُ", tr: "El-Vâhid", meaning: "Zatında, sıfatlarında and fiillerinde ortağı olmayan, tek.", zikir: 19, fazilet: "Kalp huzuru and iman selameti için." },
+            { no: 68, ar: "الصَّمَدُ", tr: "Es-Samed", meaning: "Hiçbir şeye ihtiyacı olmayan, aksine her varlığın kendisine muhtaç olduğu ulu makam.", zikir: 134, fazilet: "Kimseye muhtaç olmamak and hacetlerin görülmesi için." },
+            { no: 69, ar: "الْقَادِرُ", tr: "El-Kādir", meaning: "Dilediğini yapmaya gücü yeten, kudret sahibi.", zikir: 305, fazilet: "Güç yetirilemeyen işlerin kolaylaşması için." },
+            { no: 70, ar: "الْمُقْتَدِرُ", tr: "El-Muktedir", meaning: "Gücü her şeye yeten, kudretini varlıklar üzerinde gösteren.", zikir: 744, fazilet: "İşlerde başarı and mutlak hakimiyet için." },
+            { no: 71, ar: "الْمُقَدِّمُ", tr: "El-Mukaddim", meaning: "İstediğini öne alan, derecesini yükselten.", zikir: 184, fazilet: "Hayırlı işlerde öne geçmek and yükselmek için." },
+            { no: 72, ar: "الْمُؤَخِّرُ", tr: "El-Muahhir", meaning: "İstediğini arkaya bırakan, erteleyen, cezayı sonraya bırakan.", zikir: 846, fazilet: "Kötü alışkanlıklardan uzaklaşmak and sabır için." },
+            { no: 73, ar: "الْأَوَّلُ", tr: "El-Evvel", meaning: "Varlığının başlangıcı olmayan, ilk olan.", zikir: 37, fazilet: "Hayırlı işlerin ilk adımlarında başarı için." },
+            { no: 74, ar: "الْآخِرُ", tr: "El-Âhir", meaning: "Varlığının sonu olmayan, ebedi olan.", zikir: 801, fazilet: "Ömrü hayırla tamamlamak and imanla göçmek için." },
+            { no: 75, ar: "الظَّاهِرُ", tr: "Ez-Zâhir", meaning: "Varlığı eserleriyle and delilleriyle açıkça bilinen.", zikir: 1106, fazilet: "Hakikati görmek and basiret açıklığı için." },
+            { no: 76, ar: "الْبَاطِنُ", tr: "El-Bâtın", meaning: "Zatının hakikati akılla idrak edilemeyen, gizli olan.", zikir: 62, fazilet: "Nefis terbiyesi and iç huzuru için." },
+            { no: 77, ar: "الْوَالِي", tr: "El-Vâlî", meaning: "Kainatın and içinde olup biten her şeyi tek başına yöneten.", zikir: 47, fazilet: "Yönetimde başarı and tehlikelerden korunmak için." },
+            { no: 78, ar: "الْمُتَعَالِي", tr: "El-Müteâlî", meaning: "Yüceliği, şanı and şerefi her şeyin üstünde olan.", zikir: 541, fazilet: "Manevi makamların en üstüne çıkmak için." },
+            { no: 79, ar: "الْبَرُّ", tr: "El-Berr", meaning: "Kullarına iyilik and lütfu bol olan, vaadini yerine getiren.", zikir: 202, fazilet: "Kötülüklerden korunmak and ahlak güzelliği için." },
+            { no: 80, ar: "التَّوَّابُ", tr: "Et-Tevvâb", meaning: "Tövbeleri çokça kabul eden, günahları bağışlayan.", zikir: 409, fazilet: "İhlasla tövbe etmek and duaların kabulü için." },
+            { no: 81, ar: "الْمُنْتَقِمُ", tr: "El-Müntakım", meaning: "Suçluları adaletle cezalandıran, haksızlığın öcünü alan.", zikir: 630, fazilet: "Zalimlerin şerrinden intikam almak and adalet için." },
+            { no: 82, ar: "الْعَفُوُّ", tr: "El-Afüvv", meaning: "Çok affeden, günahları iz bırakmayacak şekilde silen.", zikir: 156, fazilet: "Affolunmak and kalbi huzura kavuşturmak için." },
+            { no: 83, ar: "الرَّءُوفُ", tr: "Er-Raûf", meaning: "Çok şefkatli, merhamet and esirgemesi sınırsız olan.", zikir: 286, fazilet: "Şefkatli olmak, merhamet görmek and huzur için." },
+            { no: 84, ar: "مَالِكُ الْمُلْكِ", tr: "Mâlikü'l-Mülk", meaning: "Mülkün mutlak sahibi, kainatın tek hakimi.", zikir: 212, fazilet: "Maddi bolluk, rızık and mülk güvenliği için." },
+            { no: 85, ar: "ذُوَ الْجَلَالِ وَالْإِكْرَامِ", tr: "Zü'l-Celâli ve'l-İkrâm", meaning: "Hem azamet (celal) hem de lütuf and ikram sahibi olan.", zikir: 1100, fazilet: "Saygınlık kazanmak and dileklerin kabulü için." },
+            { no: 86, ar: "الْمُقْسِطُ", tr: "El-Muksit", meaning: "Adaletle hükmeden, mazlumun hakkını zalimden alan.", zikir: 209, fazilet: "Eşler arası uyum and adalet duygusu için." },
+            { no: 87, ar: "الْجَامِعُ", tr: "El-Câmi'", meaning: "İstediğini istediği zaman and yerde toplayan, ahirette mahlukatı bir araya getiren.", zikir: 114, fazilet: "Kayıp eşyaları bulmak veya sevdikleriyle birleşmek için." },
+            { no: 88, ar: "الْغَنِيُّ", tr: "El-Ganî", meaning: "Çok zengin olan, hiçbir şeye and kimseye muhtaç olmayan.", zikir: 1060, fazilet: "Gönül zenginliği, bolluk and rızık genişliği için." },
+            { no: 89, ar: "الْمُغْنِي", tr: "El-Muğnî", meaning: "Müstakil zenginlik veren, dilediğini ihtiyaçtan kurtaran.", zikir: 1100, fazilet: "Geçim sıkıntısından kurtulmak and zenginlik için." },
+            { no: 90, ar: "الْمَانِعُ", tr: "El-Mâni'", meaning: "Dilemediği şeylerin gerçekleşmesine engel olan, koruyan.", zikir: 161, fazilet: "Belalardan, kazalardan and zararlı durumlardan korunmak için." },
+            { no: 91, ar: "الضَّارُّ", tr: "Ed-Dârr", meaning: "Elem and zarar verici şeyleri yaratan (imtihan gereği dilediğine veren).", zikir: 1001, fazilet: "Zararlı kişilerin şerrinden uzak kalmak için." },
+            { no: 92, ar: "النَّافِعُ", tr: "En-Nâfi'", meaning: "Hayır and fayda sağlayan şeyleri yaratan, kullarına fayda veren.", zikir: 201, fazilet: "Hastalıklardan şifa bulmak and hayırlı işler için." },
+            { no: 93, ar: "النُّورُ", tr: "En-Nûr", meaning: "Kainatı nurlandıran, gönüllere hidayet ışığı bahşeden.", zikir: 256, fazilet: "Kalbin and yüzün nurlanması, basiret açıklığı için." },
+            { no: 94, ar: "الْهَادِي", tr: "El-Hâdî", meaning: "Kullarına hidayet veren, doğru yola ulaştıran.", zikir: 20, fazilet: "Doğru yolu bulmak and çocukların hidayeti için." },
+            { no: 95, ar: "الْبَدِيعُ", tr: "El-Bedî'", meaning: "Örneksiz, emsalsiz and hayret verici güzellikte yaratan.", zikir: 86, fazilet: "Manevi keşifler, zihinsel yenilik and başarı için." },
+            { no: 96, ar: "الْبَاقِي", tr: "El-Bâkî", meaning: "Varlığının sonu olmayan, ebediyen kalıcı olan.", zikir: 113, fazilet: "Ömrün bereketli olması and kalıcılık için." },
+            { no: 97, ar: "الْوَارِثُ", tr: "El-Vâris", meaning: "Servetlerin and her şeyin geçici sahipleri yok olduktan sonra mülkün gerçek sahibi olarak kalan.", zikir: 707, fazilet: "Malın bereketli olması and hayırlı evlatlar için." },
+            { no: 98, ar: "الرَّشِيدُ", tr: "Er-Reşîd", meaning: "Her şeyi doğru hedefine ulaştıran, doğru yolu en iyi gösteren.", zikir: 514, fazilet: "Kötü alışkanlıklardan kurtulmak and olgunluk için." },
+            { no: 99, ar: "الصَّبُورُ", tr: "Es-Sabûr", meaning: "Cezalandırmada acele etmeyen, çok sabırlı olan.", zikir: 298, fazilet: "Zorluklara karşı direnç, sabır and metanet için." }
         ];
 
+        // Sayaç durumları: Her ismin kalanı ve tur sayısı (yapılan zikir turu)
         const counters = {};
+        const rounds = {};
         esmaList.forEach(item => {
             counters[item.no] = item.zikir;
+            rounds[item.no] = 0; // Başlangıçta yapılan tur 0
         });
 
         function renderEsmalar(list) {
@@ -528,12 +554,18 @@
                         <p><strong>Fazileti:</strong> ${item.fazilet}</p>
                         
                         <div class="counter-section">
-                            <div class="counter-info">
-                                Kalan: <span id="count-${item.no}">${counters[item.no]}</span>
+                            <div class="counter-stats">
+                                <div>Kalan: <span id="count-${item.no}">${counters[item.no]}</span></div>
+                                <div>Yapılan Zikir: <span id="round-${item.no}">${rounds[item.no]}</span></div>
                             </div>
-                            <button class="counter-btn" onclick="decrementCounter(${item.no}, ${item.zikir})">
-                                <i class="fas fa-fingerprint"></i> Zikret
-                            </button>
+                            <div class="counter-actions">
+                                <button class="counter-btn" onclick="decrementCounter(${item.no}, ${item.zikir})">
+                                    <i class="fas fa-fingerprint"></i> Zikret
+                                </button>
+                                <button class="reset-btn" onclick="resetCounter(${item.no}, ${item.zikir})" title="Sıfırla">
+                                    <i class="fas fa-rotate-right"></i> Sıfırla
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -547,13 +579,22 @@
                 document.getElementById(`count-${no}`).innerText = counters[no];
                 
                 if (counters[no] === 0) {
+                    rounds[no]++;
+                    document.getElementById(`round-${no}`).innerText = rounds[no];
                     setTimeout(() => {
-                        alert(`Elhamdülillah! ${no} numaralı Esma zikri tamamlandı. Yeniden başlamak için sıfırlanıyor.`);
+                        alert(`Elhamdülillah! ${no} numaralı Esma zikri tamamlandı (Tur: ${rounds[no]}). Sayaç yeniden başlatılıyor.`);
                         counters[no] = maxZikir;
                         document.getElementById(`count-${no}`).innerText = counters[no];
                     }, 100);
                 }
             }
+        }
+
+        function resetCounter(no, maxZikir) {
+            counters[no] = maxZikir;
+            rounds[no] = 0;
+            document.getElementById(`count-${no}`).innerText = counters[no];
+            document.getElementById(`round-${no}`).innerText = rounds[no];
         }
 
         function playAudio(nameText) {
